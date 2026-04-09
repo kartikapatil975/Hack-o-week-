@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himalayas Gallery</title>
+    <!-- Importing a nice font for the heading -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Page Styling --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif; /* Elegant font for blog text */
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* --- Blog Text Section (No Box) --- */
+        .blog-content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+            color: #f0f0f0; /* Light text for dark background */
+        }
+
+        .blog-content h1 {
+            font-family: 'Cinzel', serif; /* Nice font for main heading */
+            font-size: 4rem;
+            margin: 0;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+        }
+
+        .blog-content h2 {
+            font-size: 1.8rem;
+            margin-top: 10px;
+            color: #4ca1af;
+            font-style: italic;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .blog-content p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        /* --- Featured Image (h18.jpg) Below Heading --- */
+        .featured-image-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .featured-image-container img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* --- Magazine Grid Layout --- */
+        .gallery-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            
+            /* CSS Grid for Magazine Look */
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            grid-auto-rows: 350px; /* Increased height for bigger images */
+            grid-gap: 0; /* No gap for edge-to-edge look */
+        }
+
+        .gallery-item {
+            position: relative;
+            /* No background, no border, no padding */
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
+            /* Flex to center image */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            /* 'contain' ensures the FULL image is visible without cropping */
+            object-fit: contain; 
+            /* No border on the image itself */
+            border: none;
+        }
+
+        /* --- Magazine Layout Modifiers --- */
+        /* Make some images span 2 columns (Wide) */
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+        
+        /* Make some images span 2 rows (Tall) */
+        .gallery-item.tall {
+            grid-row: span 2;
+        }
+
+        /* --- Lightbox Modal Styling --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            border: 2px solid white;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(255,255,255,0.2);
+            animation: zoomIn 0.3s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            color: #bbb;
+            transform: rotate(90deg);
+        }
+
+        @keyframes zoomIn {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: 1fr; /* Single column on mobile */
+            }
+            .gallery-item.wide, .gallery-item.tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .blog-content {
+                margin: 20px;
+            }
+            .blog-content h1 {
+                font-size: 2.5rem;
+            }
+            .featured-image-container img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Blog Text Section (No Box) -->
+    <div class="blog-content">
+        <h1>Himalayas</h1>
+        <h2>The Roof of the World</h2>
+        <p>
+            Rising majestically across five nations, these towering giants have shaped the climate and destiny of South Asia for millennia. The people of the Himalayas have adapted to the harsh yet breathtaking environment with resilience and grace.
+        </p>
+    </div>
+
+    <!-- Featured Image (h18.jpg) Below Heading -->
+    <div class="featured-image-container">
+        <img src="C:\Users\SIT.LAB8\Downloads\h18.jpg" alt="Featured Himalayan View">
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-container">
+        <!-- 
+           Layout Logic:
+           - .wide: Spans 2 columns (Horizontal)
+           - .tall: Spans 2 rows (Vertical)
+           - Default: Spans 1x1
+           - All images use 'object-fit: contain' to stay fully visible
+        -->
+
+        <!-- Row 1 -->
+        <div class="gallery-item wide"><img src="C:\Users\SIT.LAB8\Downloads\h1.jpg" alt="Himalayan Diary 1"></div>
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h2.jpg" alt="Himalayan Diary 2"></div>
+        <div class="gallery-item tall"><img src="C:\Users\SIT.LAB8\Downloads\h3.jpg" alt="Himalayan Diary 3"></div>
+
+        <!-- Row 2 -->
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h4.jpg" alt="Himalayan Diary 4"></div>
+        <div class="gallery-item wide"><img src="C:\Users\SIT.LAB8\Downloads\h5.jpg" alt="Himalayan Diary 5"></div>
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h6.jpg" alt="Himalayan Diary 6"></div>
+
+        <!-- Row 3 -->
+        <div class="gallery-item tall"><img src="C:\Users\SIT.LAB8\Downloads\h7.jpg" alt="Himalayan Diary 7"></div>
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h8.jpg" alt="Himalayan Diary 8"></div>
+        <div class="gallery-item wide"><img src="C:\Users\SIT.LAB8\Downloads\h9.jpg" alt="Himalayan Diary 9"></div>
+
+        <!-- Row 4 -->
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h10.jpg" alt="Himalayan Diary 10"></div>
+        
+        <!-- New Images Added -->
+        <div class="gallery-item wide"><img src="C:\Users\SIT.LAB8\Downloads\h11.jpg" alt="Himalayan Diary 11"></div>
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h12.jpg" alt="Himalayan Diary 12"></div>
+        <div class="gallery-item tall"><img src="C:\Users\SIT.LAB8\Downloads\h13.jpg" alt="Himalayan Diary 13"></div>
+        
+        <div class="gallery-item"><img src="C:\Users\SIT.LAB8\Downloads\h15.jpg" alt="Himalayan Diary 15"></div>
+        <div class="gallery-item wide"><img src="C:\Users\SIT.LAB8\Downloads\h16.jpg" alt="Himalayan Diary 16"></div>
+        <div class="gallery-item tall"><img src="C:\Users\SIT.LAB8\Downloads\h17.jpg" alt="Himalayan Diary 17"></div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script>
+        // Select elements
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+
+        // Add click event to all images
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                lightboxImg.src = item.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        // Function to close lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        // Close lightbox if clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    </script>
+
+</body>
+</html>
